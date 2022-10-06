@@ -1,15 +1,16 @@
 function test_trino() {
 
-  var url="http://trino_url:8080";
-  var user="xxxxx";
+  var url="";
+  var user="";
   var password="";
-  var catalog="tpch";
-  var schema="tiny";
-  var object="nation";
+  var catalog="";
+  var schema="";
+  var object="";
 
-  var query="select * from "+catalog+"."+schema+"."+object;
+  var query="select * from "+catalog+"."+schema+"."+object+" limit 10";
 
   var headers = generateTrinoAPIHeaders(user,password);
+  //var headers = 
 
   const columns = getTrinoColumns(url,headers,catalog,schema,object);
   console.log(columns);
