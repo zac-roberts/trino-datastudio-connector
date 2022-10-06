@@ -1,4 +1,3 @@
-
 // https://developers.google.com/datastudio/connector/reference#isadminuser
 /**
  * This checks whether the current user is an admin user of the connector.
@@ -9,7 +8,7 @@
  * an admin user of the connector.
  */
 function isAdminUser() {
-  return false;
+  return true;
 }
 
 function logObject(object) { cc.newDebugError() .setText(JSON.stringify(object)) .throwException(); }
@@ -24,51 +23,58 @@ function logObject(object) { cc.newDebugError() .setText(JSON.stringify(object))
 function getConfig(request) {
   var config = cc.getConfig();
 
+  var url = ''
+  var user = ''
+  var catalog = ''
+  var schema = ''
+  var table = ''
+  
+
   config.newInfo()
     .setId('instructions')
-    .setText('Enter Trino server URL, user/password (let password empty if no auth), catalog, schema and table (or view) you want to query');
+    .setText('Enter Trino server URL, user/password, catalog, schema and table (or view) you want to query');
 
   config.newTextInput()
     .setId('trino_url')
     .setName('Trino Server URL')
     .setHelpText('Enter your Trino server URL (http or https) e.g. http://my_trino_server:8080 or https://my_trino_server')
-    .setPlaceholder('http://localhost:8080');
+    .setPlaceholder(url);
 
   config.newTextInput()
     .setId('trino_user')
     .setName('Trino User')
     .setHelpText('Enter your Trino user')
-    .setPlaceholder('user name');
+    .setPlaceholder(user);
 
   config.newTextInput()
     .setId('trino_password')
     .setName('Trino Password')
     .setHelpText('Enter your Trino user password. Let empty if no password required')
-    .setPlaceholder('xxxxx');
+    .setPlaceholder('password');
 
   config.newTextInput()
     .setId('trino_catalog')
     .setName('Trino Catalog')
     .setHelpText('Enter your Trino Catalog name')
-    .setPlaceholder('tpch');
+    .setPlaceholder(catalog);
 
   config.newTextInput()
     .setId('trino_schema')
     .setName('Trino Schema')
     .setHelpText('Enter your Trino Schema name')
-    .setPlaceholder('tiny');
+    .setPlaceholder(schema);
 
   config.newTextInput()
     .setId('trino_object')
     .setName('Trino Table or View')
     .setHelpText('Enter your Trino table or view name you want to query')
-    .setPlaceholder('nation');
+    .setPlaceholder(table);
 
   config.newTextInput()
     .setId('rowLimit')
     .setName('Row Limit')
     .setHelpText('Maximum number of rows to fetch in each query. Default is 1000. If set to -1, all rows will be fetched.')
-    .setPlaceholder('10000');
+    .setPlaceholder('1000');
 
   return config.build();
 }
