@@ -69,7 +69,7 @@ function getTrinoColumns(url,headers,catalog,schema,object) {
 
   var columns=[]
   const query="DESC "+catalog+"."+schema+"."+object;
-  var url_api=url+'/v1/statement';
+  var url_api=url // removed for basic method +'/v1/statement';
   
   const options_post = {
     'method' : 'post',
@@ -184,10 +184,10 @@ function getFieldsFromTrino(request) {
 function runTrinoQuery(url,headers,query) {
 
   var data=[]
-  var url_api=url+'/v1/statement';
+  var url_api=url //removed for basic approach +'/v1/statement';
   
   var options_post = {
-    'contentType' : 'application/json',
+    'contentType' : 'plain/text', // updated for basic
     'method' : 'post',
     'payload' : query,
     'validateHttpsCertificates': false,
@@ -195,7 +195,7 @@ function runTrinoQuery(url,headers,query) {
     'muteHttpExceptions':false
   };
   var options_get = {
-    'contentType' : 'application/json',
+    'contentType' : 'plain/text', // updated for basic
     'method' : 'get',
     'validateHttpsCertificates': false,
     'headers': headers,
@@ -204,6 +204,7 @@ function runTrinoQuery(url,headers,query) {
 
   var response = UrlFetchApp.fetch(url_api, options_post);
   var response_json = response.getContentText();
+  //console.log(response_json);
 
   var nextUri = JSON.parse(response_json).nextUri
   var datai = JSON.parse(response_json).data;
@@ -213,6 +214,7 @@ function runTrinoQuery(url,headers,query) {
 
     response = UrlFetchApp.fetch(nextUri, options_get);
     response_json = response.getContentText();
+    //console.log(response_json);
 
     nextUri = JSON.parse(response_json).nextUri
     datai = JSON.parse(response_json).data;
